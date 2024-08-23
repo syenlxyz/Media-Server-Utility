@@ -7,8 +7,7 @@ def run():
     input_path = Path.cwd() / 'input'
     if not input_path.is_dir():
         input_path.mkdir()
-    file_list = list(input_path.glob('**/*.mp4'))
-
+    
     options = {
         'length': 70,
         'spinner': 'classic',
@@ -17,6 +16,7 @@ def run():
         'dual_line': True
     }
     
+    file_list = list(input_path.glob('**/*.mp4'))
     results = alive_it(
         file_list,
         len(file_list),
