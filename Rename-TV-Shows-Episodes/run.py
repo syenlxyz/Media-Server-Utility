@@ -32,13 +32,14 @@ def run():
     )
     
     for folder_path in results:
-        results.text(f'Renaming TV shows episodes: {folder_path.name}')
+        folder_name = folder_path.name
+        results.text(f'Renaming TV shows episodes: {folder_name}')
         file_list = list(folder_path.glob('*.mp4'))
         for file_path in file_list:
             update_title(file_path)
         
         pattern = r'\[(.*?)\]'
-        result = re.findall(pattern, folder_path.name)
+        result = re.findall(pattern, folder_name)
         english = result[0]
         chinese = result[1]
         subtitle = result[-3]
@@ -129,6 +130,7 @@ def ifelse(test_expression, x, y):
         return y
 
 if __name__ == '__main__':
+    print(f'Running {Path(__file__).name}')
     start_time = datetime.now()
     run()
     end_time = datetime.now()
