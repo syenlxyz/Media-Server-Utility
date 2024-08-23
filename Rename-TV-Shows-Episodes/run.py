@@ -130,7 +130,7 @@ def ifelse(test_expression, x, y):
         return y
 
 if __name__ == '__main__':
-    print(f'Running {__file__}')
+    print(f'Running {Path(__file__).parent.name}')
     start_time = datetime.now()
     run()
     end_time = datetime.now()
