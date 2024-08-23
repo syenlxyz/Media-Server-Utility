@@ -1,6 +1,6 @@
 from alive_progress import alive_it
 from datetime import datetime
-from mutagen.mp4 import MP4
+from mutagen import File
 from pathlib import Path
 import re
 import shutil
@@ -27,12 +27,12 @@ def run():
     results = alive_it(
         folder_list,
         len(folder_list),
-        finalize=lambda bar: bar.text('Renaming files: done'),
+        finalize=lambda bar: bar.text('Renaming TV shows episodes: done'),
         **options
     )
     
     for folder_path in results:
-        results.text(f'Renaming files: {folder_path.name}')
+        results.text(f'Renaming TV shows episodes: {folder_path.name}')
         file_list = list(folder_path.glob('*.mp4'))
         for file_path in file_list:
             update_title(file_path)
@@ -59,11 +59,11 @@ def run():
                 shutil.move(file_path, target)
 
 def update_title(file_path):
-    file = MP4(file_path)
-    title = file.get('©nam')
-    if not title:
-        file['©nam'] = file_path.stem
-        file['©cmt'] = file_path.stem
+    file = File(file_path)
+    title = file.get('title')
+    if not title: # Need update
+        file['title'] = file_path.stem
+        file['comment'] = file_path.stem
         file.save()
     else:
         title = ''.join(title)
