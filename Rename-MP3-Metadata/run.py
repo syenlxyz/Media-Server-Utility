@@ -32,7 +32,7 @@ def run():
         file.save()
 
 if __name__ == '__main__':
-    print(f'Running {Path(__file__).name}')
+    print(f'Running {__file__}')
     start_time = datetime.now()
     run()
     end_time = datetime.now()
