@@ -18,7 +18,6 @@ def run():
         shutil.rmtree(output_path)
         output_path.mkdir()
     
-    folder_list = list(input_path.iterdir())
     options = {
         'length': 70,
         'spinner': 'classic',
@@ -27,6 +26,7 @@ def run():
         'dual_line': True
     }
     
+    folder_list = list(input_path.iterdir())
     results = alive_it(
         folder_list,
         len(folder_list),
@@ -37,7 +37,6 @@ def run():
     for folder_path in results:
         folder_name = folder_path.name
         results.text(f'Renaming TV shows subtitles: {folder_name}')
-        
         file_list = list(folder_path.iterdir())
         for file_path in file_list:
             file_name = file_path.name.replace('_', '-')
@@ -45,6 +44,7 @@ def run():
             shutil.copy2(file_path, new_path)
 
 if __name__ == '__main__':
+    print(f'Running {Path(__file__).name}')
     start_time = datetime.now()
     run()
     end_time = datetime.now()
