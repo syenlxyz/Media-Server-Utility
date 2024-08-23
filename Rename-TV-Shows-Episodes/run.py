@@ -59,7 +59,7 @@ def run():
                 shutil.move(file_path, target)
 
 def update_title(file_path):
-    file = File(file_path)
+    file = File(file_path, easy=True)
     title = file.get('title')
     if not title: # Need update
         file['title'] = file_path.stem
