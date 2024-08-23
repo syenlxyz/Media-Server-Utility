@@ -5,9 +5,9 @@ from pathlib import Path
 
 def run():
     input_path = Path.cwd() / 'input'
-    file_list = list(input_path.glob('**/*.mp3'))
-    if not file_list:
-        return None
+    if not input_path.is_dir():
+        input_path.mkdir()
+    file_list = list(input_path.glob('**/*.mp4'))
     
     options = {
         'length': 70,
@@ -20,17 +20,16 @@ def run():
     results = alive_it(
         file_list,
         len(file_list),
-        finalize=lambda bar: bar.text('Renaming file metadata: done'),
+        finalize=lambda bar: bar.text('Renaming MP3 metadata: done'),
         **options
     )
     
     for file_path in results:
-        results.text(f'Renaming file metadata: {file_path.name}')
+        results.text(f'Renaming MP3 metadata: {file_path.name}')
         file = File(file_path, easy=True)
         file['title'] = file_path.stem
         file['album'] = file_path.parent.stem
         file.save()
-    return file_path
 
 if __name__ == '__main__':
     print(f'Running {Path(__file__).name}')
