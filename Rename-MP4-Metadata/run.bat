@@ -1,5 +1,5 @@
 @echo off
-for %%x in (%cd%) do title %%~nx
+for %%I in (%cd%) do title %%~nI
 call conda activate
 python run.py
 pause
