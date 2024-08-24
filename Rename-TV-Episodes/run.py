@@ -36,7 +36,11 @@ def run():
         results.text(f'Renaming TV episodes: {folder_name}')
         file_list = list(folder_path.glob('*.mp4'))
         for file_path in file_list:
-            update_title(file_path)
+            file_name = file_path.name
+            if len(file_name.split('.')) != 6:
+                file = File(file_path, easy=True)
+                file['title'] = file_path.stem
+                file.save()
         
         pattern = r'\[(.*?)\]'
         result = re.findall(pattern, folder_name)
@@ -58,18 +62,6 @@ def run():
             else:
                 target = output_path / file_path.name
                 shutil.move(file_path, target)
-
-def update_title(file_path):
-    file = File(file_path, easy=True)
-    title = file.get('title')
-    if not title: # Need update
-        file['title'] = file_path.stem
-        file['comment'] = file_path.stem
-        file.save()
-    else:
-        title = ''.join(title)
-        target = file_path.parent / f'{title}.mp4'
-        file_path.rename(target)
 
 def get_season(folder_path):
     num_digit = 2
