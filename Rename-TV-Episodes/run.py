@@ -27,13 +27,13 @@ def run():
     results = alive_it(
         folder_list,
         len(folder_list),
-        finalize=lambda bar: bar.text('Renaming TV shows episodes: done'),
+        finalize=lambda bar: bar.text('Renaming TV episodes: done'),
         **options
     )
     
     for folder_path in results:
         folder_name = folder_path.name
-        results.text(f'Renaming TV shows episodes: {folder_name}')
+        results.text(f'Renaming TV episodes: {folder_name}')
         file_list = list(folder_path.glob('*.mp4'))
         for file_path in file_list:
             update_title(file_path)
