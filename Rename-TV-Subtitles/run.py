@@ -30,13 +30,13 @@ def run():
     results = alive_it(
         folder_list,
         len(folder_list),
-        finalize=lambda bar: bar.text('Renaming TV shows subtitles: done'),
+        finalize=lambda bar: bar.text('Renaming TV subtitles: done'),
         **options
     )
     
     for folder_path in results:
         folder_name = folder_path.name
-        results.text(f'Renaming TV shows subtitles: {folder_name}')
+        results.text(f'Renaming TV subtitles: {folder_name}')
         file_list = list(folder_path.iterdir())
         for file_path in file_list:
             file_name = file_path.name.replace('_', '-')
