@@ -57,8 +57,8 @@ def run():
         output_file = output_path / f'{file_name}.mkv'
         subprocess.run(f'ffmpeg -hide_banner -loglevel error -i "{video_file}" -i "{audio_file}" -c copy -y "{output_file}"')
         
-        #video_file.unlink()
-        #audio_file.unlink()
+        video_file.unlink()
+        audio_file.unlink()
 
 def get_playlist():
     playlist = []
