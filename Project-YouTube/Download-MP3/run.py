@@ -6,12 +6,7 @@ from urllib.parse import urlparse, parse_qs
 import subprocess
 
 def run():
-    input_path = Path.cwd() / 'input'
     output_path = Path.cwd() / 'output'
-    
-    if not input_path.is_dir():
-        input_path.mkdir()
-    
     if not output_path.is_dir():
         output_path.mkdir()
     
@@ -43,10 +38,11 @@ def run():
             .order_by('bitrate')
             .desc()
             .first()
-            .download(input_path)
+            .download(output_path)
         )
-        output_file = output_path / f'{input_file.stem}.mp3'
+        output_file = input_file.with_suffix('.mp3')
         subprocess.run(f'ffmpeg -hide_banner -loglevel error -i "{input_file}" -y "{output_file}"')
+        input_file.unlink()
 
 def get_playlist():
     playlist = []
