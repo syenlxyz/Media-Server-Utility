@@ -17,10 +17,13 @@ def run():
         'dual_line': True
     }
     
-    url_list = get_url_list()
+    playlist = get_playlist()
+    if not playlist:
+        return None
+    
     results = alive_it(
-        url_list,
-        len(url_list),
+        playlist,
+        len(playlist),
         finalize=lambda bar: bar.text('Downloading MP4: done'),
         **options
     )
@@ -33,29 +36,29 @@ def run():
         .first() \
         .download(output_path)
 
-def get_url_list():
+def get_playlist():
+    playlist = []
     url = input('Paste link here: ')
-    while not url:
+    while url:
         result = urlparse(url)
         netloc = result.netloc
         if 'youtu.be' == netloc:
-            url_list = [url]
-            return url_list
+            playlist.append(url)
         elif 'youtube.com' in netloc:
             query = result.query
             params = parse_qs(query)
             keys = list(params.keys())
             if 'list' in keys:
                 p = Playlist(url)
-                url_list = list(p.video_urls)
-                return url_list
+                playlist.extend(p.video_urls)
             elif 'v' in keys:
-                url_list = [url]
-                return url_list
+                playlist.append(url)
             else:
                 url = input('Invalid URL. Please try again: ')
         else:
             url = input('Invalid URL. Please try again: ')
+    else:
+        return playlist
 
 if __name__ == '__main__':
     print(f'Running {Path(__file__).parent.name}')
