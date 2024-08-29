@@ -30,16 +30,16 @@ def run():
     results = alive_it(
         playlist,
         len(playlist),
-        finalize=lambda bar: bar.text('Downloading MP4: done'),
+        finalize=lambda bar: bar.text('Downloading MP3: done'),
         **options
     )
     
     for url in results:
-        results.text(f'Downloading MP4: {url}')
+        results.text(f'Downloading MP3: {url}')
         yt = YouTube(url)
         input_file = Path(
             yt.streams
-            .filter(only_audio=True, file_extension='mp4')
+            .filter(only_audio=True)
             .order_by('bitrate')
             .desc()
             .first()
