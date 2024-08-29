@@ -55,7 +55,7 @@ def run():
         
         file_name = video_file.stem.replace(' - Video Only', '')
         output_file = output_path / f'{file_name}.mkv'
-        subprocess.run(f'ffmpeg -hide_banner -loglevel error -i "{video_file}" -i "{audio_file}" -c copy -map_metadata:s:v 0:s:v -map_metadata:s:a 1:s:a -y "{output_file}"')
+        subprocess.run(f'ffmpeg -hide_banner -loglevel error -i "{video_file}" -i "{audio_file}" -c copy -map 0:v -map 1:a -y "{output_file}"')
         
         #video_file.unlink()
         #audio_file.unlink()
