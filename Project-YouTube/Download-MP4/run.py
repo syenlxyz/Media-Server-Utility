@@ -3,7 +3,6 @@ from datetime import datetime
 from pathlib import Path
 from pytube import YouTube, Playlist
 from urllib.parse import urlparse, parse_qs
-import shutil
 
 def run():
     output_path = Path.cwd() / 'output'
