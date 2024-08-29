@@ -32,7 +32,7 @@ def run():
     for url in results:
         results.text(f'Downloading MP3: {url}')
         yt = YouTube(url)
-        input_file = Path(
+        audio_file = Path(
             yt.streams
             .filter(only_audio=True)
             .order_by('bitrate')
@@ -40,9 +40,9 @@ def run():
             .first()
             .download(output_path)
         )
-        output_file = input_file.with_suffix('.mp3')
-        subprocess.run(f'ffmpeg -hide_banner -loglevel error -i "{input_file}" -y "{output_file}"')
-        input_file.unlink()
+        output_file = audio_file.with_suffix('.mp3')
+        subprocess.run(f'ffmpeg -hide_banner -loglevel error -i "{audio_file}" -y "{output_file}"')
+        audio_file.unlink()
 
 def get_playlist():
     playlist = []
