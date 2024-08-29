@@ -39,7 +39,7 @@ def run():
 def get_playlist():
     playlist = []
     while True:
-        url = input('Paste link here: ')
+        url = input('Paste link here (or press ENTER to continue): ')
         if not url:
             break
         result = urlparse(url)
