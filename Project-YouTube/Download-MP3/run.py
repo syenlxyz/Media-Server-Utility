@@ -3,7 +3,8 @@ from datetime import datetime
 from pathlib import Path
 from pytube import YouTube, Playlist
 from urllib.parse import urlparse, parse_qs
-import subprocess
+#import subprocess
+import ffmpeg
 
 def run():
     input_path = Path.cwd() / 'input'
@@ -46,7 +47,8 @@ def run():
             .download(input_path)
         )
         output_file = output_path / f'{input_file.stem}.mp3'
-        subprocess.run(f'ffmpeg -i "{input_file}" -y "{output_file}"')
+        #subprocess.run(f'ffmpeg -i "{input_file}" -y "{output_file}"')
+        ffmpeg.input(str(input_file)).output(str(output_file)).run(overwrite_output=True)
 
 def get_playlist():
     playlist = []
