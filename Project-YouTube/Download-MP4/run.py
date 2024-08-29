@@ -41,7 +41,7 @@ def run():
 
 def get_url_list():
     url = input('Paste link here: ')
-    while True:
+    while not url:
         result = urlparse(url)
         netloc = result.netloc
         if 'youtu.be' == netloc:
