@@ -38,8 +38,10 @@ def run():
 
 def get_playlist():
     playlist = []
-    url = input('Paste link here: ')
-    while url:
+    while True:
+        url = input('Paste link here: ')
+        if not url:
+            break
         result = urlparse(url)
         netloc = result.netloc
         if 'youtu.be' == netloc:
@@ -54,11 +56,10 @@ def get_playlist():
             elif 'v' in keys:
                 playlist.append(url)
             else:
-                url = input('Invalid URL. Please try again: ')
+                print('Invalid URL. Please try again.')
         else:
-            url = input('Invalid URL. Please try again: ')
-    else:
-        return playlist
+            print('Invalid URL. Please try again.')
+    return playlist
 
 if __name__ == '__main__':
     print(f'Running {Path(__file__).parent.name}')
