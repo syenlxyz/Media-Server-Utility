@@ -10,11 +10,6 @@ def run():
     if not output_path.is_dir():
         output_path.mkdir()
     
-    file_list = list(output_path.iterdir())
-    if file_list:
-        shutil.rmtree(output_path)
-        output_path.mkdir()
-    
     options = {
         'length': 70,
         'spinner': 'classic',
