@@ -32,7 +32,7 @@ def run():
         results.text(f'Downloading MP4: {url}')
         yt = YouTube(url)
         yt.streams \
-        .filter(progressive=True, file_extension='mp4') \
+        .filter(progressive=True) \
         .first() \
         .download(output_path)
 
