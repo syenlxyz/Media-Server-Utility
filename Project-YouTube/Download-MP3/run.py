@@ -4,7 +4,6 @@ from pathlib import Path
 from pytube import YouTube, Playlist
 from urllib.parse import urlparse, parse_qs
 import subprocess
-#import ffmpeg
 
 def run():
     input_path = Path.cwd() / 'input'
