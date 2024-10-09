@@ -41,6 +41,11 @@ def run():
                 file = File(file_path, easy=True)
                 file['title'] = file_path.stem
                 file.save()
+            else:
+                file = File(file_path, easy=True)
+                title = file['title']
+                target_path = file_path.parent / f'{title}.mp4'
+                file_path.rename(target_path)
         
         pattern = r'\[(.*?)\]'
         result = re.findall(pattern, folder_name)
