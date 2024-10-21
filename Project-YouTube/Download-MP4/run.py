@@ -3,6 +3,7 @@ from datetime import datetime
 from pathlib import Path
 from pytube import YouTube, Playlist
 from urllib.parse import urlparse, parse_qs
+import subprocess
 
 def run():
     output_path = Path.cwd() / 'output'
@@ -31,10 +32,33 @@ def run():
     for url in results:
         results.text(f'Downloading MP4: {url}')
         yt = YouTube(url)
-        yt.streams \
-        .filter(progressive=True, file_extension='mp4') \
-        .first() \
-        .download(output_path)
+        
+        video_file = Path(
+            yt.streams
+            .filter(only_video=True)
+            .order_by('resolution')
+            .desc()
+            .first()
+            .download(output_path)
+        )
+        video_file = video_file.replace(output_path / f'{video_file.stem} - Video Only{video_file.suffix}')
+        
+        audio_file = Path(
+            yt.streams
+            .filter(only_audio=True)
+            .order_by('bitrate')
+            .desc()
+            .first()
+            .download(output_path)
+        )
+        audio_file = audio_file.replace(output_path / f'{audio_file.stem} - Audio Only{audio_file.suffix}')
+        
+        file_name = video_file.stem.replace(' - Video Only', '')
+        output_file = output_path / f'{file_name}.mp4'
+        subprocess.run(f'ffmpeg -hide_banner -loglevel error -i "{video_file}" -i "{audio_file}" -c copy -y "{output_file}"')
+        
+        video_file.unlink()
+        audio_file.unlink()
 
 def get_playlist():
     playlist = []
